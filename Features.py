@@ -37,10 +37,10 @@ def Analysis(timestamp, membernames, memberid, messages):
     if messages == '检测':
         return '屑', 'text'
 
-def Clear(txt):                                     #清洗文本,去除换行、特殊符号以及去重
+def Clear(txt: str) -> list:                                     #清洗文本,去除换行、特殊符号以及去重
     
     spew = ['|', '&', '%']
-    comms = list()
+    comms: list
 
     if re.match('^:', txt) == None:                 #排除非特殊信息,留做文本分析
         comms.append('analysis')

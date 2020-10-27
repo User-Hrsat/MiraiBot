@@ -3,15 +3,29 @@
 import asyncio
 import re
 
-from mirai import (At, Friend, Group, Image, Member, MessageChain, Mirai,
-                   Plain, XmlMessage)
+from graia.application.entry import (At, Friend, GraiaMiraiApplication, Group,
+                                     Image, Member, MessageChain, Plain,
+                                     Session, Xml)
+from graia.broadcast import Broadcast
 
 import Features
 
-authKey = ""
-qq = 
+app = Broadcast(loop=asyncio.get_event_loop())
 
-mirai = Mirai(f"mirai://127.0.0.1:8080/?authKey={authKey}&qq={qq}", websocket=True)
+mirai = GraiaMiraiApplication(
+        broadcast = app,
+        connect_info = Session(
+            host = "http://127.0.0.1:8080",
+            authKey = "",
+            account = 123,
+            websocket = True
+        )
+)
+
+#authKey = ""
+#qq = 
+
+#mirai = Mirai(f"mirai://127.0.0.1:8080/?authKey={authKey}&qq={qq}", websocket=True)
 
 #@mirai.onStage("around")                           #脚本启动或关闭时给我发消息
 #async def greet(mirai: Mirai):
@@ -19,8 +33,8 @@ mirai = Mirai(f"mirai://127.0.0.1:8080/?authKey={authKey}&qq={qq}", websocket=Tr
 #@mirai.subroutine
 #async def subroutine0(mirai: Mirai):                #怎么拿message
 
-@mirai.receiver("GroupMessage")
-async def event_gm(mirai: Mirai, message: MessageChain, group: Group, member: Member):
+@app.receiver("GroupMessage")
+async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
 
     messages = message.toString()                   #留做刷屏和脏话的检测
     timestamp = message.__root__[0].time            #每条消息的时间
@@ -49,7 +63,7 @@ async def event_gm(mirai: Mirai, message: MessageChain, group: Group, member: Me
     switch = {                                      #switch/case
             'text' : Plain,                         #消息组件复用
             'image' : Image.fromFileSystem,         #消息组件复用
-            'xml' : XmlMessage,                     #消息组件复用
+            'xml' : Xml,                     #消息组件复用
             ':网抑云' : Features.Cloudmusic,
             ':image' : Features.Image,
             ':rss' : Features.RSS,
@@ -86,4 +100,4 @@ async def event_gm(mirai: Mirai, message: MessageChain, group: Group, member: Me
         await sendmessage(i)
 
 if __name__ == "__main__":
-    mirai.run()
+    mirai.launch_blocking()
