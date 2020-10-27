@@ -4,9 +4,9 @@
    <img width="95" src="docs/mirai.svg" alt="title">
 <div>
 
----
+----
 
-# MiraiBot
+## MiraiBot
 
 ```txt
 一个基于Graia的MiraiBot[Kuriyama最可爱]
