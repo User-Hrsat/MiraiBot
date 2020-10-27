@@ -9,5 +9,6 @@
 ## MiraiBot
 
 ```txt
-一个基于Graia的MiraiBot[Kuriyama最可爱]
+    一个基于Graia的MiraiBot[Kuriyama最可爱]
+    准备重构
 ```
