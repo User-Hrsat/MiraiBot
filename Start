@@ -1,0 +1,11 @@
+#!/bin/bash
+
+nohup ./miraiOK_linux-amd64 >> /dev/null & nohup python3.8 MainPy/Main.py >> /dev/null
+
+#check_out = $(nohup ./miraiOK_linux-amd64 >> LOG.txt)
+#if [[$check_out = ~"1291517893: Login successful"]]
+#then
+#    nohup ./Main.py
+#else
+#    echo "Login failed..."
+#fi
