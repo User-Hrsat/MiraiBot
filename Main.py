@@ -16,8 +16,8 @@ mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
             host = "http://127.0.0.1:8080",
-            authKey = "MeuPasswd",
-            account = 1291517893,
+            authKey = "",
+            account = 1234567,
             websocket = True
         )
 )
