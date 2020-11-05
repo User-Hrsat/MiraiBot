@@ -1,114 +1,76 @@
 #! /usr/bin/env python3
 
-import datetime
-import json
-import os
-import random
-import re
 import time
+from os import popen
+from random import randint
+from re import match
 from urllib import request
 
+#import datetime
 #import jieba  # 有点差劲唉,可能是没用好
 #jieba.set_dictionary('./BadLanguage/dict.txt')
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
 
-class Feathures():
- 
-    def __init__(self, timestamp: str, membernames: str, memberid: int, messages: str):
-                                                                                #清洗文本,去除换行、特殊符号以及去重
+class Clean():
 
-        self.timestamp = timestamp
-        self.membernames = membernames
-        self.memberid = memberid
+    def __init__(self, messages):                                               #清洗文本,去除换行、特殊符号以及去重
+
         self.messages = messages
 
-        self.comms: list
+        self.comms: list = []
         spew = ['|', '&', '%']
-        switch = {
-            ':网抑云' : self.Cloudmusic,
-            ':image' : self.Image,
-            ':rss' : self.RSS,
-            ':zuan' : self.Zuan,
-            ':help' : self.Help,
-            'analysis': self.Analysis
-            }
 
-        if re.match('^:', self.messages) == None:                               #排除非特征信息,留做文本分析
+        if match('^:', self.messages) == None:                                  #排除非特征信息,留做文本分析
             self.comms.append('analysis')
         else:
             for i in spew:
-                self.comms = self.messages.replace(i, '\n')                     #去特殊字符
-            self.comms = self.comms.splitlines()                                #去换行
-            for i in self.comms:
-                if re.match('^:', i) != None:                                   #保留以:开头的字段
-                    if i == 'analysis':
-                        switch[i](timestamp, membernames, memberid, messages)
-                    elif re.match('^:ping', i):
-                        self.Ping(i)
-                    else:
-                        switch[i]()
+                self.messages = self.messages.replace(i, '\n')                  #去特殊字符
+            self.comms = self.messages.splitlines()                             #去换行
 
-            #        self.comms.append(i)
-            #self.comms = list(set(self.comms))          #去重
+    def Clean(self):
+        print(self.comms)
+        return self.comms
 
-    def Analysis(self, timestamp, membernames, memberid, messages):
-                                                        #文本分析
-    #    timestamp = datetime.datetime.strftime(timestamp, "%Y-%m-%d %H:%M:%S")
-    #    date = {
-    #            '时间' : timestamp,
-    #            '昵称' : membernames,
-    #            'ID' : memberid,
-    #            '消息' : messages
-    #            }
-    #
-    #    jsoncode = json.dumps(date)
-    #    jsonfile = open('History.json', 'a+')
-    #    jsonfile.write(jsoncode+'\n')
-    #    jsonfile.close()                                #施工中...
-    
-    #    cutwords = jieba.lcut(messages)
-    #    words = open('./BadLanguage/badlanguage.txt', 'r')
-    #    for w in cutwords:
-    #        if w+'\n' in words.readlines():
-    #            words.close()
-    #            return '不要讲脏话'
-        if messages == '检测':
-            return '屑', 'text'
+class Features():
+
+    def __init__(self, com):
+
+        self.com = com
 
     def Cloudmusic(self):
     
         return '正在施工', 'text'
-    
-    def Noncomd(self, i):                                     #不存在的指令
-    
-        if len(i) > 7:
+
+    def Image(self):
+        num = randint(0, 2)
+        return f"resource/images/{num}.jpg", 'image'
+
+    def Noncomd(self):                                                          #不存在的指令
+
+        if len(self.com) > 7:
             return
         else:
-            return f"没有{i}这条命令!", 'text'
-    
-    def Image(self):
-        num = random.randint(0, 2)
-        return f"resource/images/{num}.jpg", 'image'
-    
-    def Ping(self, i: str):
-        ip = re.match(":ping ((25[0-5])|(2[0-4]d)|(1dd)|([1-9]d)|d)(.((25[0-5])|(2[0-4]d)|(1dd)|([1-9]d)|d)){3}", i)
-        url = re.match(":ping [a-zA-Z0-9][-a-zA-Z0-9]{0,62}(.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+.?", i)
-        
-        if ip != None or url != None:
-            resuatl = str()                             #预定义变量真不爽
-            i = list(i)
-            i.pop(0)                                    #去:号
-            i = ''.join(i)                              #转换为字符串
-            restr = os.popen(f"{i} -c 4")
+            return f"没有{self.com}这条命令!", 'text'
+
+    def Ping(self):
+        #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
+        url = match(r":ping [a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?", self.com)
+
+        if url != None:
+            resuatl: str = ''                                                   #预定义变量真不爽
+            i = list(self.com)
+            i.pop(0)                                                            #去':'
+            i = ''.join(i)                                                      #转换为字符串
+            restr = popen(f"{i} -c 4")                                          #调用系统
             for i in restr.readlines():
                 resuatl += i
             return resuatl, 'text'
     
-        if ip == None and url == None:
+        if url == None:
             return """正确用法:
 :ping IPor域名
 一定要填写正确的IP或域名哦!""", 'text'
-    
+
     def RSS(self):
         return '你说什么我听不懂', 'text'
     
@@ -117,7 +79,7 @@ class Feathures():
         zuan = response.read()
         return zuan.decode('utf-8'), 'text'
     
-    def Help(self):                                         #明明我这边排版好好的
+    def Help(self):                                                             #明明我这边排版好好的
         return """用法: :[指令]
     
 :image      发送图片
@@ -130,3 +92,54 @@ class Feathures():
     OR
     :[指令]
     :[指令]""", 'text'
+
+class Analysis():                                                               #语义分析，图灵化
+
+    def __init__(self, timestamp, membernames, memberid, messages):
+
+        self.timestamp = timestamp
+        self.membernames = membernames
+        self.memberid = memberid
+        self.messages = messages
+
+    def Run(self):
+    #    timestamp = datetime.datetime.strftime(timestamp, "%Y-%m-%d %H:%M:%S")
+    #    date = {
+    #            '时间' : timestamp,
+    #            '昵称' : membernames,
+    #            'ID' : memberid,
+    #            '消息' : messages
+    #            }                                                              之前用结巴分词然后查txt太慢了，后续使用redis
+
+        if self.messages == '检测':
+            return '屑', 'text'
+
+class Proce():                                                                  #路由
+
+    def __init__(self, timestamp, membernames, memberid, messages, com):
+
+        self.timestamp = timestamp
+        self.membernames = membernames
+        self.memberid = memberid
+        self.messages = messages
+        self.com = com
+
+    def Run(self):
+
+        switch = {
+           ':网抑云' : Features.Cloudmusic,
+           ':image' : Features.Image,
+           ':rss' : Features.RSS,
+           ':zuan' : Features.Zuan,
+           ':help' : Features.Help
+           }
+
+        try:
+            if match('^:ping', self.com):                                       #特殊指令
+                return Features(self.com).Ping()
+            elif self.com == 'analysis':
+                return Analysis(self.timestamp, self.membernames, self.memberid, self.messages).Run()
+            else:
+                return switch[self.com](self)                                   #处理结果以及类型
+        except KeyError:
+            Features(self.com).Noncomd()

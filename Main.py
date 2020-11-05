@@ -1,14 +1,13 @@
 #! /usr/bin/env python3.8
 
 import asyncio
-import re
 
 from graia.application.entry import (At, Friend, GraiaMiraiApplication, Group,
                                      Image, Member, MessageChain, Plain,
                                      Session, Xml)
 from graia.broadcast import Broadcast
 
-from Features import Feathures
+from Features import Clean, Proce
 
 app = Broadcast(loop=asyncio.get_event_loop())
 
@@ -17,7 +16,7 @@ mirai = GraiaMiraiApplication(
         connect_info = Session(
             host = "http://127.0.0.1:8080",
             authKey = "",
-            account = 1234567,
+            account = 1234567890,
             websocket = True
         )
 )
@@ -30,38 +29,40 @@ mirai = GraiaMiraiApplication(
 #async def greet(mirai: Mirai):
 
 #@mirai.subroutine
-#async def subroutine0(mirai: Mirai):                #怎么拿message
+#async def subroutine0(mirai: Mirai):               #怎么拿message
 
 @app.receiver("GroupMessage")
 async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
 
-    messages = message.toString()                   #留做刷屏和脏话的检测
+    messages = message.asDisplay()                  #消息
     timestamp = message.__root__[0].time            #每条消息的时间
-    membernames = member.memberName
+    membernames = member.name
     memberid = member.id                            #发送消息的人
 
-    switch = {                                      #switch/case
-            'text' : Plain,                         #消息组件复用
-            'image' : Image.fromFileSystem,         #消息组件复用
-            'xml' : Xml,                            #消息组件复用
+    switch = {                                      #消息组件复用
+            'text' : Plain,
+            'image' : Image.fromLocalFile,
+            'xml' : Xml
         }
 
-    async def sendmessage(recall):
-        try:
-            remessage = recall[0]
-            infotype = recall[1]
-        except TypeError:
-            return
+    async def sendmessage(remessage, infotype):
 
         await mirai.sendGroupMessage(
                 group.id,
-                [
+                MessageChain(
+                    __root__=[
                     At(target=memberid),
                     switch[infotype](remessage)
                     ]
                 )
+        )
 
-    await sendmessage(Feathures(timestamp, membernames, memberid, messages))
+    command = Clean(messages).Clean()
+
+    for com in command:
+
+        recall = Proce(timestamp, membernames, memberid, messages, com).Run()
+        await sendmessage(recall[0], recall[1])
 
 if __name__ == "__main__":
     mirai.launch_blocking()
