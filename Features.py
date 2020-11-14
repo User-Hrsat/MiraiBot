@@ -27,7 +27,7 @@ class Clean():
                 self.messages = self.messages.replace(i, '\n')                  #去特殊字符
             self.comms = self.messages.splitlines()                             #去换行
 
-    def Clean(self):
+    def Call(self):
         print(self.comms)
         return self.comms
 
@@ -134,6 +134,8 @@ class Proce():                                                                  
            ':help' : Features.Help
            }
 
+        print(self.com)
+
         try:
             if match('^:ping', self.com):                                       #特殊指令
                 return Features(self.com).Ping()
@@ -142,4 +144,4 @@ class Proce():                                                                  
             else:
                 return switch[self.com](self)                                   #处理结果以及类型
         except KeyError:
-            Features(self.com).Noncomd()
+            return Features(self.com).Noncomd()

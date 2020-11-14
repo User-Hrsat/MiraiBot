@@ -16,7 +16,7 @@ mirai = GraiaMiraiApplication(
         connect_info = Session(
             host = "http://127.0.0.1:8080",
             authKey = "",
-            account = 1234567890,
+            account = 123,
             websocket = True
         )
 )
@@ -57,11 +57,12 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
                 )
         )
 
-    command = Clean(messages).Clean()
+    command = Clean(messages).Call()
 
     for com in command:
 
         recall = Proce(timestamp, membernames, memberid, messages, com).Run()
+        print(recall)
         await sendmessage(recall[0], recall[1])
 
 if __name__ == "__main__":
