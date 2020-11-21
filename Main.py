@@ -36,8 +36,9 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
     messages = message.asDisplay()                  #消息
     timestamp = message.__root__[0].time            #每条消息的时间
-    membernames = member.name
+    groupid = group.id                              #发消息的群/以免刷屏检测混淆
     memberid = member.id                            #发送消息的人
+    print(groupid)
 
     switch = {                                      #消息组件复用
             'text' : Plain,
@@ -61,9 +62,12 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
     for com in command:
 
-        recall = Proce(timestamp, membernames, memberid, messages, com).Run()
-        print(recall)
-        await sendmessage(recall[0], recall[1])
+        try:
+            recall = Proce(timestamp, groupid, memberid, messages, com).Run()
+            await sendmessage(recall[0], recall[1])
+            print(recall)
+        except TypeError:
+            return
 
 if __name__ == "__main__":
     mirai.launch_blocking()

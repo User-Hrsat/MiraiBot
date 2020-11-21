@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import time
+from copy import deepcopy
 from os import popen
 from random import randint
 from re import match
@@ -10,6 +11,7 @@ from urllib import request
 #import jieba  # 有点差劲唉,可能是没用好
 #jieba.set_dictionary('./BadLanguage/dict.txt')
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
+mesdic : dict = {'init' : [['*', '#'], ['*', '#']]}
 
 class Clean():
 
@@ -95,12 +97,36 @@ class Features():
 
 class Analysis():                                                               #语义分析，图灵化
 
-    def __init__(self, timestamp, membernames, memberid, messages):
+    def __init__(self, timestamp, groupid, memberid, messages):
 
         self.timestamp = timestamp
-        self.membernames = membernames
+        self.groupid = groupid
         self.memberid = memberid
         self.messages = messages
+
+    def Analysis(self):
+
+        global mesdic
+
+        if self.groupid not in mesdic:
+            mesdic[self.groupid] = deepcopy(mesdic['init'])
+
+        if len(mesdic[self.groupid][0]) < 3:
+            mesdic[self.groupid][0].append(self.messages)
+            mesdic[self.groupid][1].append(self.memberid)
+        
+        if len(mesdic[self.groupid][0]) == 3:
+            if mesdic[self.groupid][0][2] == mesdic[self.groupid][0][1]:
+                mesdic[self.groupid][0].pop(0)
+                if mesdic[self.groupid][1][2] == mesdic[self.groupid][1][1]:
+                    mesdic[self.groupid][1].pop(0)
+                    return '刷屏'
+                else:
+                    mesdic[self.groupid][1].pop(0)
+                    return '复读'
+            else:
+                mesdic[self.groupid][0].pop(0)
+                mesdic[self.groupid][1].pop(0)
 
     def Run(self):
     #    timestamp = datetime.datetime.strftime(timestamp, "%Y-%m-%d %H:%M:%S")
@@ -111,15 +137,19 @@ class Analysis():                                                               
     #            '消息' : messages
     #            }                                                              之前用结巴分词然后查txt太慢了，后续使用redis
 
+        res = self.Analysis()
+        if res:
+            return res, 'text'
+
         if self.messages == '检测':
             return '屑', 'text'
 
 class Proce():                                                                  #路由
 
-    def __init__(self, timestamp, membernames, memberid, messages, com):
+    def __init__(self, timestamp, groupid, memberid, messages, com):
 
         self.timestamp = timestamp
-        self.membernames = membernames
+        self.groupid = groupid
         self.memberid = memberid
         self.messages = messages
         self.com = com
@@ -140,7 +170,7 @@ class Proce():                                                                  
             if match('^:ping', self.com):                                       #特殊指令
                 return Features(self.com).Ping()
             elif self.com == 'analysis':
-                return Analysis(self.timestamp, self.membernames, self.memberid, self.messages).Run()
+                return Analysis(self.timestamp, self.groupid, self.memberid, self.messages).Run()
             else:
                 return switch[self.com](self)                                   #处理结果以及类型
         except KeyError:
