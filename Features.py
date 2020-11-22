@@ -11,7 +11,7 @@ from urllib import request
 #import jieba  # 有点差劲唉,可能是没用好
 #jieba.set_dictionary('./BadLanguage/dict.txt')
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
-mesdic : dict = {'init' : [['*', '#'], ['*', '#']]}
+mesdic : dict = {'init' : [['message', '#'], ['sender', '#']]}
 
 class Clean():
 
@@ -104,26 +104,30 @@ class Analysis():                                                               
         self.memberid = memberid
         self.messages = messages
 
-    def Analysis(self):
+    def Analysis(self):                                                         #太差了
 
         global mesdic
+        wlist = ['[图片]', '[表情]']
 
         if self.groupid not in mesdic:
-            mesdic[self.groupid] = deepcopy(mesdic['init'])
+            mesdic[self.groupid] = [['messages', '#'], ['sender', '#']]
 
+        print(f'头:{mesdic}')
         if len(mesdic[self.groupid][0]) < 3:
-            mesdic[self.groupid][0].append(self.messages)
-            mesdic[self.groupid][1].append(self.memberid)
+            if self.messages not in wlist:
+                mesdic[self.groupid][0].append(self.messages)
+                mesdic[self.groupid][1].append(self.memberid)
         
         if len(mesdic[self.groupid][0]) == 3:
+            print(f'中:{mesdic}')
             if mesdic[self.groupid][0][2] == mesdic[self.groupid][0][1]:
                 mesdic[self.groupid][0].pop(0)
                 if mesdic[self.groupid][1][2] == mesdic[self.groupid][1][1]:
                     mesdic[self.groupid][1].pop(0)
-                    return '刷屏'
+                    return '不要刷屏！'
                 else:
                     mesdic[self.groupid][1].pop(0)
-                    return '复读'
+                    return '不许复读！'
             else:
                 mesdic[self.groupid][0].pop(0)
                 mesdic[self.groupid][1].pop(0)
