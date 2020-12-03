@@ -75,6 +75,9 @@ class Features():
 
     def RSS(self):
         return '你说什么我听不懂', 'text'
+
+    def Wiki(self):
+        return "resource/images/zhwiki-hans.png", "image"
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
@@ -165,6 +168,7 @@ class Proce():                                                                  
            ':image' : Features.Image,
            ':rss' : Features.RSS,
            ':zuan' : Features.Zuan,
+           ':wiki' : Features.Wiki,
            ':help' : Features.Help
            }
 
