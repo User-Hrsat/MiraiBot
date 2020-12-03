@@ -3,7 +3,7 @@
 import asyncio
 
 from graia.application.entry import (At, Friend, GraiaMiraiApplication, Group,
-                                     Image, Member, MessageChain, Plain,
+                                     Image, Json, Member, MessageChaini, Plain,
                                      Session, Xml)
 from graia.broadcast import Broadcast
 
@@ -15,8 +15,8 @@ mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
             host = "http://127.0.0.1:8080",
-            authKey = "",
-            account = 123,
+            authKey = "MeuPasswd",
+            account = 1291517893,
             websocket = True
         )
 )
@@ -43,10 +43,11 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
     switch = {                                      #消息组件复用
             'text' : Plain,
             'image' : Image.fromLocalFile,
+            'json' : Json;
             'xml' : Xml
         }
 
-    async def sendmessage(remessage, infotype):
+    async def sendmessage(remessage, infotype):     #没有考虑到多种类型的消息同时发送，需重写
 
         await mirai.sendGroupMessage(
                 group.id,

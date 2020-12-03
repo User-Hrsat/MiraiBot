@@ -33,11 +33,15 @@ class Clean():
         print(self.comms)
         return self.comms
 
-class Features():
+class Features():                                                               #依赖指令的功能
 
     def __init__(self, com):
 
         self.com = com
+
+    def Card(self):
+
+        return '{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}', 'json'
 
     def Cloudmusic(self):
     
@@ -98,7 +102,12 @@ class Features():
     :[指令]
     :[指令]""", 'text'
 
-class Analysis():                                                               #语义分析，图灵化
+class Analysis():
+    '''
+    语义分析
+    后期需要接入redis使用词库实现图灵化
+    包括Features里的函数
+    '''
 
     def __init__(self, timestamp, groupid, memberid, messages):
 
@@ -108,6 +117,9 @@ class Analysis():                                                               
         self.messages = messages
 
     def Analysis(self):                                                         #太差了
+        '''
+        勉强能用的上下文复读刷屏检测，不能检测跳跃式复读
+        '''
 
         global mesdic
         wlist = ['[图片]', '[表情]']
@@ -151,9 +163,12 @@ class Analysis():                                                               
         if self.messages == '检测':
             return '屑', 'text'
 
-class Proce():                                                                  #路由
+class Proce():                                                                  #调度器
+    '''
+    所有功能的集中调度
+    '''
 
-    def __init__(self, timestamp, groupid, memberid, messages, com):
+    def __init__(self, timestamp, groupid, memberid, messages, com):            #是不是考虑一下元组拆包的特性以减少代码量
 
         self.timestamp = timestamp
         self.groupid = groupid
@@ -165,6 +180,7 @@ class Proce():                                                                  
 
         switch = {
            ':网抑云' : Features.Cloudmusic,
+           ':card' : Features.Card,
            ':image' : Features.Image,
            ':rss' : Features.RSS,
            ':zuan' : Features.Zuan,
