@@ -52,18 +52,13 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
     async def sendmessage(remessage, infotype):     #没有考虑到多种类型的消息同时发送，需重写
 
-        ReMessageChain = MessageChain.create([At(target=memberid)])
-        ReMessageChain = MessageChain.join(switch[infotype](remessage))
         await mirai.sendGroupMessage(
                 group.id,
-                ReMessageChain
-                '''
                 MessageChain(
                     __root__=[
                     At(target=memberid),
                     switch[infotype](remessage)
                     ]
-                '''
                 )
         )
 
@@ -73,7 +68,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
         try:
             recall = Proce(timestamp, groupid, memberid, messages, com).Run()
-            await sendmessage(for remessage, infotype in recall)        #尝试元组拆包挽救复用器
+            await sendmessage(recall[0], recall[1])
             print(recall)
         except TypeError:
             return
