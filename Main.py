@@ -52,13 +52,18 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
     async def sendmessage(remessage, infotype):     #没有考虑到多种类型的消息同时发送，需重写
 
+        ReMessageChain = MessageChain.create([At(target=memberid)])
+        ReMessageChain = MessageChain.join(switch[infotype](remessage))
         await mirai.sendGroupMessage(
                 group.id,
+                ReMessageChain
+                '''
                 MessageChain(
                     __root__=[
                     At(target=memberid),
                     switch[infotype](remessage)
                     ]
+                '''
                 )
         )
 
