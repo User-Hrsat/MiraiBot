@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SATRT(){
+    #cd path/to/bot
     nohup ./miraiOK_linux-amd64 > /dev/null &
     if [ ! `$(ps -ef | grep mirai.console)`];then
         sleep 7s
