@@ -3,7 +3,7 @@
 import asyncio
 
 from graia.application.entry import (At, Friend, GraiaMiraiApplication, Group,
-                                     Image, Json, Member, MessageChaini, Plain,
+                                     Image, Json, Member, MessageChain, Plain,
                                      Session, Xml)
 from graia.broadcast import Broadcast
 
@@ -15,7 +15,7 @@ mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
             host = "http://127.0.0.1:8080",
-            authKey = "MeuPasswd",
+            authKey = "INITKEYGMGZMdzU",
             account = 1291517893,
             websocket = True
         )
@@ -38,12 +38,15 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
     timestamp = message.__root__[0].time            #每条消息的时间
     groupid = group.id                              #发消息的群/以免刷屏检测混淆
     memberid = member.id                            #发送消息的人
+
+    sendmessages = MessageChain
+
     print(groupid)
 
     switch = {                                      #消息组件复用
             'text' : Plain,
             'image' : Image.fromLocalFile,
-            'json' : Json;
+            'json' : Json,
             'xml' : Xml
         }
 
@@ -65,7 +68,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
         try:
             recall = Proce(timestamp, groupid, memberid, messages, com).Run()
-            await sendmessage(recall[0], recall[1])
+            await sendmessage(for remessage, infotype in recall)        #尝试元组拆包挽救复用器
             print(recall)
         except TypeError:
             return

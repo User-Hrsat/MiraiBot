@@ -81,7 +81,7 @@ class Features():                                                               
         return '你说什么我听不懂', 'text'
 
     def Wiki(self):
-        return "resource/images/zhwiki-hans.png", "image"
+        return [("resource/images/zhwiki-hans.png", "image"), ("消息组合测试", "text")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
