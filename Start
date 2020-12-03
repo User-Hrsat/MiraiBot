@@ -1,11 +1,29 @@
 #!/bin/bash
 
-nohup ./miraiOK_linux-amd64 >> /dev/null & nohup python3.8 MainPy/Main.py >> /dev/null
+SATRT(){
+    nohup ./miraiOK_linux-amd64 > /dev/null &
+    if [ ! `$(ps -ef | grep mirai.console)`];then
+        sleep 7s
+        nohup python3.8 Main.py > /dev/null &
+    fi
+}
 
-#check_out = $(nohup ./miraiOK_linux-amd64 >> LOG.txt)
-#if [[$check_out = ~"1291517893: Login successful"]]
-#then
-#    nohup ./Main.py
-#else
-#    echo "Login failed..."
-#fi
+STOP(){
+    kill -9 $(ps -ef | grep mirai.console | cut -c 10-16)
+    kill -9 $(ps -ef | grep Main.py | cut -c 10-16)
+}
+
+case $1 in 
+    start)  # 服务启动需要做的步骤
+        SATRT;;
+    stop)  # 服务停止需要做的步骤
+        STOP;;
+    restart) # 重启服务需要做的步骤
+        STOP
+        SATRT;;
+    status) # 查看状态需要做的步骤
+        echo ""STATUS;;
+          *) echo "$0 {start|stop|restart|status}"
+             exit 4
+             ;;
+esac
