@@ -21,7 +21,17 @@ mirai = GraiaMiraiApplication(
 
 @app.receiver("GroupMessage")
 async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
-    print(f"{mirai}\n{message}\n{group}\n{member}")
+    recall = MessageChain.create()
+
+    list0 = [('123', 'text'), ('../resource/images/zhwiki-hans.png', 'image')]
+    switch = {                                      #消息组件复用
+            'text' : Plain,
+            'image' : Image.fromLocalFile,
+            'json' : Json,
+            'xml' : Xml
+            }
+    list1 = switch[i in list0[1]](i in list0 [0])
+    print(list1)
 
 if __name__=="__main__":
     mirai.launch_blocking()
