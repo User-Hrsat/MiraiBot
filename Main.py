@@ -51,11 +51,12 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
         }
 
     async def createChain(recall):
-        messageChain = []
-        for item in recall:
-            messageChain.append(MessageChain.create([switch[item[1]](item[0])]))
-        for el in messageChain:
-            sendChain.plus(el)
+        messageChain = [MessageChain.create([switch[infotype](content)]) for item in recall]
+        sendChain.plus(el for el in messageChain)
+        # for item in recall:
+        #     messageChain.append(MessageChain.create([switch[item[1]](item[0])]))
+        # for el in messageChain:
+        #     sendChain.plus(el)
         print(f"sendChain:=>{sendChain}")
 
     async def sendmessage():     #没有考虑到多种类型的消息同时发送，需重写

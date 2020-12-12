@@ -41,22 +41,22 @@ class Features:                                                               #�
 
     def Card(self):
 
-        return [('{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}', 'json')]
+        return [('json', '{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}')]
 
     def Cloudmusic(self):
     
-        return [('正在施工', 'text')]
+        return [('text', '正在施工')]
 
     def Image(self):
         num = randint(0, 2)
-        return [(f"resource/images/{num}.jpg", 'image')]
+        return [('image', f"resource/images/{num}.jpg")]
 
     def Noncomd(self):                                                          #不存在的指令
 
         if len(self.com) > 7:
             return
         else:
-            return [(f"没有{self.com}这条命令!", 'text')]
+            return [("text", f"没有{self.com}这条命令!")]
 
     def Ping(self):
         #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
@@ -70,26 +70,27 @@ class Features:                                                               #�
             restr = popen(f"{i} -c 4")                                          #调用系统
             for i in restr.readlines():
                 resuatl += i
-            return [(resuatl, 'text')]
+            return [('text', resuatl)]
     
         if url == None:
-            return [("""正确用法:
+            return [("text", """"正确用法:
 :ping IPor域名
-一定要填写正确的IP或域名哦!""", 'text')]
+一定要填写正确的IP或域名哦!""")]
 
     def RSS(self):
-        return [('你说什么我听不懂', 'text')]
+        return [("text", '你说什么我听不懂')]
 
     def Wiki(self):
-        return [("resource/images/zhwiki-hans.png", "image"), ("\n维基百科", "text")]
+        return [("image", "resource/images/zhwiki-hans.png"), ("text", "\n维基百科")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
         zuan = response.read()
-        return [(zuan.decode('utf-8'), 'text')]
+        return [("text", zuan.decode('utf-8'))]
     
     def Help(self):                                                             #明明我这边排版好好的
-        return [("""用法: :[指令]
+        return [("text", """"
+用法: :[指令]
     
 :image      发送图片
 :ping       就是ping嘛
@@ -100,7 +101,7 @@ class Features:                                                               #�
     :[指令]分割符(|,&或%):[指令]
     OR
     :[指令]
-    :[指令]""", 'text')]
+    :[指令]""")]
 
 class Analysis:
     '''
@@ -158,10 +159,10 @@ class Analysis:
 
         res = self.Analysis()
         if res:
-            return [(res, 'text')]
+            return [("text", res)]
 
         if self.messages == '检测':
-            return [('屑', 'text')]
+            return [("text", '屑')]
 
 class Proce:                                                                  #调度器
     '''
