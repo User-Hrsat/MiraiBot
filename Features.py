@@ -30,7 +30,7 @@ class Clean:
             self.comms = self.messages.splitlines()                             #去换行
 
     def Call(self):
-        print(self.comms)
+        print(f"self.comms:=>{self.comms}")
         return self.comms
 
 class Features:                                                               #依赖指令的功能
@@ -81,7 +81,7 @@ class Features:                                                               #�
         return [('你说什么我听不懂', 'text')]
 
     def Wiki(self):
-        return [("resource/images/zhwiki-hans.png", "image")]
+        return [("resource/images/zhwiki-hans.png", "image"), ("\n维基百科", "text")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
@@ -188,7 +188,7 @@ class Proce:                                                                  #�
            ':help' : Features.Help
            }
 
-        print(self.com)
+        print(f"self.com:=>{self.com}")
 
         try:
             if match('^:ping', self.com):                                       #特殊指令
