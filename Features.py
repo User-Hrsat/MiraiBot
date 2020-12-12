@@ -12,27 +12,26 @@ from urllib import request
 #jieba.set_dictionary('./BadLanguage/dict.txt')
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
 
-mesdic : dict = {'init' : [['message', '#'], ['sender', '#']]}
-
 class Clean:
+    '''
+    文本清洗
+    适用于固定指令
+    '''
+
+    # comList: list = []                                这样写，内存泄漏了
 
     def __init__(self, messages):                       #清洗文本,去除换行、特殊符号以及去重
 
         self.messages = messages
-
-        self.comms: list = []
-        spew = ['|', '&', '%']
+        self.comList: list = []
+        spwords = ('|', '&', '%')
 
         if match('^:', self.messages) == None:          #排除非特征信息,留做文本分析
-            self.comms.append('analysis')
+            self.comList.append('analysis')
         else:
-            for i in spew:
-                self.messages = self.messages.replace(i, '\n')  #去特殊字符
-            self.comms = self.messages.splitlines()     #去换行
-
-    def Call(self):
-        print(f"self.comms:=>{self.comms}")
-        return self.comms
+            for word in spwords:
+                self.messages = self.messages.replace(word, '\n')  #去特殊字符
+            self.comList = self.messages.splitlines()     #去换行
 
 class Features:                                         #固定指令的功能
 
@@ -51,13 +50,6 @@ class Features:                                         #固定指令的功能
     def Image(self):
         num = randint(0, 2)
         return [('image', f"resource/images/{num}.jpg")]
-
-    def Noncomd(self):                                  #不存在的指令
-
-        if len(self.com) > 7:
-            return
-        else:
-            return [('text', f"没有{self.com}这条命令!")]
 
     def Ping(self):
         #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
@@ -112,43 +104,44 @@ class Analysis:
     包括Features里的函数
     '''
 
-    def __init__(self, timestamp, groupid, memberid, messages):
+    mesdic : dict = {'init' : [['message', '#'], ['sender', '#']]}
 
-        self.timestamp = timestamp
-        self.groupid = groupid
-        self.memberid = memberid
-        self.messages = messages
+    def __init__(self, sourceAll):
+
+        self.timestamp, self.groupid, self.memberid, self.messages = sourceAll
 
     def Analysis(self):                                 #太差了
         '''
         勉强能用的上下文复读刷屏检测，不能检测跳跃式复读
         '''
 
-        global mesdic
-        wlist = ['[图片]', '[表情]']
+        wlist = ('[图片]', '[表情]', '')
 
-        if self.groupid not in mesdic:
-            mesdic[self.groupid] = [['messages', '#'], ['sender', '#']]
+        if self.groupid not in self.mesdic:             #追加并初始化没有的群组
+            self.mesdic[self.groupid] = [['messages', '#'], ['sender', '#']]
 
-        print(f'头:{mesdic}')
-        if len(mesdic[self.groupid][0]) < 3:
-            if self.messages not in wlist:
-                mesdic[self.groupid][0].append(self.messages)
-                mesdic[self.groupid][1].append(self.memberid)
+        # print("=====================")
+        # print(f"始:=>{self.mesdic}")
+        if len(self.mesdic[self.groupid][0]) < 3:       #列表仅有三项
+            if self.messages not in wlist:              #排除无法检测的内容
+                self.mesdic[self.groupid][0].append(self.messages)   #追加消息
+                self.mesdic[self.groupid][1].append(self.memberid)   #追加发送者id
         
-        if len(mesdic[self.groupid][0]) == 3:
-            print(f'中:{mesdic}')
-            if mesdic[self.groupid][0][2] == mesdic[self.groupid][0][1]:
-                mesdic[self.groupid][0].pop(0)
-                if mesdic[self.groupid][1][2] == mesdic[self.groupid][1][1]:
-                    mesdic[self.groupid][1].pop(0)
+        if len(self.mesdic[self.groupid][0]) == 3:
+            # print(f'中:=>{self.mesdic}')
+            if self.mesdic[self.groupid][0][2] == self.mesdic[self.groupid][0][1]:
+                self.mesdic[self.groupid][0].pop(0)
+                if self.mesdic[self.groupid][1][2] == self.mesdic[self.groupid][1][1]:
+                    self.mesdic[self.groupid][1].pop(0)
                     return '不要刷屏！'
                 else:
-                    mesdic[self.groupid][1].pop(0)
+                    self.mesdic[self.groupid][1].pop(0)
                     return '不许复读！'
-            else:
-                mesdic[self.groupid][0].pop(0)
-                mesdic[self.groupid][1].pop(0)
+            else:                                       #删除第一项
+                self.mesdic[self.groupid][0].pop(0)
+                self.mesdic[self.groupid][1].pop(0)
+            # print(f"尾:=>{self.mesdic}")
+            # print("=====================")
 
     def Run(self):
     #    timestamp = datetime.datetime.strftime(timestamp, "%Y-%m-%d %H:%M:%S")
@@ -172,35 +165,31 @@ class Proce:
     所有功能的集中调度
     '''
 
-    def __init__(self, timestamp, groupid, memberid, messages, com):
+    def __init__(self, sourceAll, com):
                                                         #是不是考虑一下元组拆包的特性以减少代码量
-
-        self.timestamp = timestamp
-        self.groupid = groupid
-        self.memberid = memberid
-        self.messages = messages
+        self.sourceAll = sourceAll
         self.com = com
 
     def Run(self):
 
         switch = {
-           ':网抑云' : Features.Cloudmusic,
-           ':card' : Features.Card,
-           ':image' : Features.Image,
-           ':rss' : Features.RSS,
-           ':zuan' : Features.Zuan,
-           ':wiki' : Features.Wiki,
-           ':help' : Features.Help
-           }
+                ':网抑云' : Features.Cloudmusic,
+                ':card' : Features.Card,
+                ':image' : Features.Image,
+                ':rss' : Features.RSS,
+                ':zuan' : Features.Zuan,
+                ':wiki' : Features.Wiki,
+                ':help' : Features.Help
+            }
 
-        print(f"self.com:=>{self.com}")
+        # print(f"self.com:=>{self.com}")
 
         try:
-            if match('^:ping', self.com):                                       #特殊指令
+            if match('^:ping', self.com):               #特殊指令
                 return Features(self.com).Ping()
             elif self.com == 'analysis':
-                return Analysis(self.timestamp, self.groupid, self.memberid, self.messages).Run()
+                return Analysis(self.sourceAll).Run()
             else:
-                return switch[self.com](self)                                   #处理结果以及类型
+                return switch[self.com](self)
         except KeyError:
-            return Features(self.com).Noncomd()
+            return [('text', f"没有{self.com}这条命令!")]  

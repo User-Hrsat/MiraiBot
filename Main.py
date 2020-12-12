@@ -31,47 +31,56 @@ mirai = GraiaMiraiApplication(
 
 #@mirai.subroutine
 #async def subroutine0(mirai: Mirai):               #怎么拿message
+## END
 
 @app.receiver("GroupMessage")
 async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
 
+    # 此处需要重写，以应对混合消息
     messages = message.asDisplay()                  #消息
     timestamp = message.__root__[0].time            #每条消息的时间
     groupid = group.id                              #发消息的群/以免刷屏检测混淆
     memberid = member.id                            #发送消息的人
 
-    sendChain = MessageChain.create([At(memberid)])
+    sourceAll = (timestamp, groupid, memberid, messages)
 
-    print(f"groupid:=>{groupid}")
+    # print(f"messages:=>{messages}")
+    # print(f"groupid:=>{groupid}")
 
-    switch = {                                      #消息组件复用
+    switch = {                                      #消息组件复用，新类型添加即可
             'text' : Plain,
             'image' : Image.fromLocalFile,
             'json' : Json,
             'xml' : Xml
         }
 
-    async def sendMessage(recall):                  #没有考虑到多种类型的消息同时发送，需重写
-
+    async def sendMessage(recall):                  #已支持不同类型的消息同时发送
+        '''
+        消息发送器
+        支持不同类型的内容拼接发送
+        '''
+ 
         messageChain = [MessageChain.create([switch[item[0]](item[1])]) for item in recall]
-        print(f"messageChain:=>{messageChain}")
+        sendChain = MessageChain.create([At(memberid)])
+        # print(f"messageChain:=>{messageChain}")
         # sendChain.plus(el for el in messageChain) 为什么不能用
         for el in messageChain:
             sendChain.plus(el)
-        print(f"sendChain:=>{sendChain}")
+        # print(f"sendChain:=>{sendChain}")
 
         await mirai.sendGroupMessage(
                 group.id,
                 sendChain
         )
 
-    command = Clean(messages).Call()
+    command = Clean(messages).comList
+    # print(f"command:=>{command}")
 
     for com in command:
 
         try:
-            recall = Proce(timestamp, groupid, memberid, messages, com).Run()
-            print(f"recall:=>{recall}")
+            recall = Proce(sourceAll, com).Run()
+            # print(f"recall:=>{recall}")
             await sendMessage(recall)
         except TypeError:
             return
