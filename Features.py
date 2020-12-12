@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python3.8
 
 import time
 from copy import deepcopy
@@ -8,32 +8,33 @@ from re import match
 from urllib import request
 
 #import datetime
-#import jieba  # 有点差劲唉,可能是没用好
+#import jieba                                           有点差劲唉,可能是没用好
 #jieba.set_dictionary('./BadLanguage/dict.txt')
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
+
 mesdic : dict = {'init' : [['message', '#'], ['sender', '#']]}
 
 class Clean:
 
-    def __init__(self, messages):                                               #清洗文本,去除换行、特殊符号以及去重
+    def __init__(self, messages):                       #清洗文本,去除换行、特殊符号以及去重
 
         self.messages = messages
 
         self.comms: list = []
         spew = ['|', '&', '%']
 
-        if match('^:', self.messages) == None:                                  #排除非特征信息,留做文本分析
+        if match('^:', self.messages) == None:          #排除非特征信息,留做文本分析
             self.comms.append('analysis')
         else:
             for i in spew:
-                self.messages = self.messages.replace(i, '\n')                  #去特殊字符
-            self.comms = self.messages.splitlines()                             #去换行
+                self.messages = self.messages.replace(i, '\n')  #去特殊字符
+            self.comms = self.messages.splitlines()     #去换行
 
     def Call(self):
         print(f"self.comms:=>{self.comms}")
         return self.comms
 
-class Features:                                                               #依赖指令的功能
+class Features:                                         #固定指令的功能
 
     def __init__(self, com):
 
@@ -45,51 +46,52 @@ class Features:                                                               #�
 
     def Cloudmusic(self):
     
-        return [('text', '正在施工')]
+        return [('text', "正在施工")]
 
     def Image(self):
         num = randint(0, 2)
         return [('image', f"resource/images/{num}.jpg")]
 
-    def Noncomd(self):                                                          #不存在的指令
+    def Noncomd(self):                                  #不存在的指令
 
         if len(self.com) > 7:
             return
         else:
-            return [("text", f"没有{self.com}这条命令!")]
+            return [('text', f"没有{self.com}这条命令!")]
 
     def Ping(self):
         #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
         url = match(r":ping [a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?", self.com)
 
         if url != None:
-            resuatl: str = ''                                                   #预定义变量真不爽
+            resuatl: str = ""                           #预定义变量真不爽
             i = list(self.com)
-            i.pop(0)                                                            #去':'
-            i = ''.join(i)                                                      #转换为字符串
-            restr = popen(f"{i} -c 4")                                          #调用系统
+            i.pop(0)                                    #去':'
+            i = ''.join(i)                              #转换为字符串
+            restr = popen(f"{i} -c 4")                  #调用系统
             for i in restr.readlines():
                 resuatl += i
             return [('text', resuatl)]
     
         if url == None:
-            return [("text", """"正确用法:
+            return [('text', """
+正确用法:
 :ping IPor域名
 一定要填写正确的IP或域名哦!""")]
 
     def RSS(self):
-        return [("text", '你说什么我听不懂')]
+        return [('text', "你说什么我听不懂")]
 
     def Wiki(self):
-        return [("image", "resource/images/zhwiki-hans.png"), ("text", "\n维基百科")]
+        return [('image', "resource/images/zhwiki-hans.png"), ('text', "\n维基百科")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
         zuan = response.read()
-        return [("text", zuan.decode('utf-8'))]
+        return [('text', zuan.decode('utf-8'))]
     
-    def Help(self):                                                             #明明我这边排版好好的
-        return [("text", """"
+    def Help(self):                                     #明明我这边排版好好的,辣稽
+        return [('text', """
 用法: :[指令]
     
 :image      发送图片
@@ -117,7 +119,7 @@ class Analysis:
         self.memberid = memberid
         self.messages = messages
 
-    def Analysis(self):                                                         #太差了
+    def Analysis(self):                                 #太差了
         '''
         勉强能用的上下文复读刷屏检测，不能检测跳跃式复读
         '''
@@ -155,21 +157,23 @@ class Analysis:
     #            '昵称' : membernames,
     #            'ID' : memberid,
     #            '消息' : messages
-    #            }                                                              之前用结巴分词然后查txt太慢了，后续使用redis
+    #            }                                      之前用结巴分词然后查txt太慢了，后续使用redis
 
         res = self.Analysis()
         if res:
-            return [("text", res)]
+            return [('text', res)]
 
         if self.messages == '检测':
-            return [("text", '屑')]
+            return [('text', '屑')]
 
-class Proce:                                                                  #调度器
+class Proce:
     '''
+    调度器
     所有功能的集中调度
     '''
 
-    def __init__(self, timestamp, groupid, memberid, messages, com):            #是不是考虑一下元组拆包的特性以减少代码量
+    def __init__(self, timestamp, groupid, memberid, messages, com):
+                                                        #是不是考虑一下元组拆包的特性以减少代码量
 
         self.timestamp = timestamp
         self.groupid = groupid

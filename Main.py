@@ -21,6 +21,7 @@ mirai = GraiaMiraiApplication(
         )
 )
 
+## 原kuriyama的写法，项目没了，留个纪念
 #authKey = ""
 #qq = 
 #mirai = Mirai(f"mirai://127.0.0.1:8080/?authKey={authKey}&qq={qq}", websocket=True)
@@ -50,16 +51,14 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
             'xml' : Xml
         }
 
-    async def createChain(recall):
-        messageChain = [MessageChain.create([switch[infotype](content)]) for item in recall]
-        sendChain.plus(el for el in messageChain)
-        # for item in recall:
-        #     messageChain.append(MessageChain.create([switch[item[1]](item[0])]))
-        # for el in messageChain:
-        #     sendChain.plus(el)
-        print(f"sendChain:=>{sendChain}")
+    async def sendMessage(recall):                  #没有考虑到多种类型的消息同时发送，需重写
 
-    async def sendmessage():     #没有考虑到多种类型的消息同时发送，需重写
+        messageChain = [MessageChain.create([switch[item[0]](item[1])]) for item in recall]
+        print(f"messageChain:=>{messageChain}")
+        # sendChain.plus(el for el in messageChain) 为什么不能用
+        for el in messageChain:
+            sendChain.plus(el)
+        print(f"sendChain:=>{sendChain}")
 
         await mirai.sendGroupMessage(
                 group.id,
@@ -73,8 +72,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
         try:
             recall = Proce(timestamp, groupid, memberid, messages, com).Run()
             print(f"recall:=>{recall}")
-            await createChain(recall)
-            await sendmessage()
+            await sendMessage(recall)
         except TypeError:
             return
 
