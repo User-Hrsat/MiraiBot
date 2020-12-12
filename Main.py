@@ -39,7 +39,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
     groupid = group.id                              #发消息的群/以免刷屏检测混淆
     memberid = member.id                            #发送消息的人
 
-    sendmessages = MessageChain
+    sendChain = MessageChain.create([At(memberid)])
 
     print(groupid)
 
@@ -50,16 +50,18 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
             'xml' : Xml
         }
 
-    async def sendmessage(remessage, infotype):     #没有考虑到多种类型的消息同时发送，需重写
+    async def createChain(recall):
+        messageChain = []
+        for item in recall:
+            messageChain.append(MessageChain.create([switch[item[1]](item(0))]))
+        for el in messageChain:
+            sendChain.plus(el)
+
+    async def sendmessage(sendChain):     #没有考虑到多种类型的消息同时发送，需重写
 
         await mirai.sendGroupMessage(
                 group.id,
-                MessageChain(
-                    __root__=[
-                    At(target=memberid),
-                    switch[infotype](remessage)
-                    ]
-                )
+                sendChain
         )
 
     command = Clean(messages).Call()
@@ -68,7 +70,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
         try:
             recall = Proce(timestamp, groupid, memberid, messages, com).Run()
-            await sendmessage(recall[0], recall[1])
+            await sendmessage(createChain(recall))
             print(recall)
         except TypeError:
             return

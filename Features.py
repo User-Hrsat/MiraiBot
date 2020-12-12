@@ -13,7 +13,7 @@ from urllib import request
 #jieba.load_userdict('./BadLanguage/badlanguage.txt')
 mesdic : dict = {'init' : [['message', '#'], ['sender', '#']]}
 
-class Clean():
+class Clean:
 
     def __init__(self, messages):                                               #清洗文本,去除换行、特殊符号以及去重
 
@@ -33,7 +33,7 @@ class Clean():
         print(self.comms)
         return self.comms
 
-class Features():                                                               #依赖指令的功能
+class Features:                                                               #依赖指令的功能
 
     def __init__(self, com):
 
@@ -41,22 +41,22 @@ class Features():                                                               
 
     def Card(self):
 
-        return '{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}', 'json'
+        return [('{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}', 'json')]
 
     def Cloudmusic(self):
     
-        return '正在施工', 'text'
+        return [('正在施工', 'text')]
 
     def Image(self):
         num = randint(0, 2)
-        return f"resource/images/{num}.jpg", 'image'
+        return [(f"resource/images/{num}.jpg", 'image')]
 
     def Noncomd(self):                                                          #不存在的指令
 
         if len(self.com) > 7:
             return
         else:
-            return f"没有{self.com}这条命令!", 'text'
+            return [(f"没有{self.com}这条命令!", 'text')]
 
     def Ping(self):
         #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
@@ -70,26 +70,26 @@ class Features():                                                               
             restr = popen(f"{i} -c 4")                                          #调用系统
             for i in restr.readlines():
                 resuatl += i
-            return resuatl, 'text'
+            return [(resuatl, 'text')]
     
         if url == None:
-            return """正确用法:
+            return [("""正确用法:
 :ping IPor域名
-一定要填写正确的IP或域名哦!""", 'text'
+一定要填写正确的IP或域名哦!""", 'text')]
 
     def RSS(self):
-        return '你说什么我听不懂', 'text'
+        return [('你说什么我听不懂', 'text')]
 
     def Wiki(self):
-        return "resource/images/zhwiki-hans.png", "image"
+        return [("resource/images/zhwiki-hans.png", "image")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
         zuan = response.read()
-        return zuan.decode('utf-8'), 'text'
+        return [(zuan.decode('utf-8'), 'text')]
     
     def Help(self):                                                             #明明我这边排版好好的
-        return """用法: :[指令]
+        return [("""用法: :[指令]
     
 :image      发送图片
 :ping       就是ping嘛
@@ -100,9 +100,9 @@ class Features():                                                               
     :[指令]分割符(|,&或%):[指令]
     OR
     :[指令]
-    :[指令]""", 'text'
+    :[指令]""", 'text')]
 
-class Analysis():
+class Analysis:
     '''
     语义分析
     后期需要接入redis使用词库实现图灵化
@@ -158,12 +158,12 @@ class Analysis():
 
         res = self.Analysis()
         if res:
-            return res, 'text'
+            return [(res, 'text')]
 
         if self.messages == '检测':
-            return '屑', 'text'
+            return [('屑', 'text')]
 
-class Proce():                                                                  #调度器
+class Proce:                                                                  #调度器
     '''
     所有功能的集中调度
     '''
