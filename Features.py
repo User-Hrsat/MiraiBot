@@ -41,7 +41,7 @@ class Features:                                         #固定指令的功能
 
     def Card(self):
 
-        return [('json', '{"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.1","prompt":"[礼物]礼物","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"sender":"0","isFree":"1","giftName":"川建国","desc":"川建国已成为你的专属RBQ","orderNum":"","toUin":"","unopenIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","openIconUrl":"https:\/\/cdn.read.html5.qq.com\/image?src=circle&q=5&r=0&imgflag=7&cdn_cache=24&imageUrl=http%3A%2F%2Fp%2Eqpic%2Ecn%2Fmttcircle%2F0%2F51f9903584e80acdfm1721610i92183821%5F202010w04%5F80b935f111a4132a10e9ca3f4f0cc2e3%2Epn%2F0","boxZipUrl":"","giftZipUrl":"","giftParticleUrl":"","msgId":""}},"config":{"forward":1},"text":"","sourceAd":"","extra":""}')]
+        return [('json', {"app":"com.tencent.giftmall.giftark","desc":"","view":"giftArk","ver":"1.0.4.3","prompt":"1","appID":"","sourceName":"","actionData":"","actionData_A":"","sourceUrl":"","meta":{"giftData":{"animationType":"0","arkBgUrl":"\/qzone\/space_item\/material\/QzoneGift\/org\/12\/19676\/ke.png","arkGuestBgUrl":"\/qzone\/space_item\/material\/QzoneGift\/org\/13\/204973\/ke.png","boxZipUrl":"","desc":"","giftMsg":"（日期）","giftName":"时间:","giftParticleUrl":"\/aoi\/sola\/20200211152108_OwLVpEObQT.png","giftPrice":"6660","giftZipUrl":"\/qzone\/qzact\/act\/external\/shijun\/mghdh.zip","isFree":"0","lottieUrl":"","msgId":"6794593814080377150","openIconUrl":"\/aoi\/sola\/20200211152101_nl6z8Et70n.png","orderNum":"","sender":"1","toUin":"2012683191","unopenIconUrl":"\/aoi\/sola\/20190524114722_moYXoHozlK.png"}},"config":{"ctime":1581989650,"forward":0,"token":""}})]
 
     def Cloudmusic(self):
     
@@ -152,12 +152,18 @@ class Analysis:
     #            '消息' : messages
     #            }                                      之前用结巴分词然后查txt太慢了，后续使用redis
 
+        switch = {
+                '歪比歪比' : "歪比巴卜",
+                '歪比巴卜' : "歪比歪比"
+            }
         res = self.Analysis()
         if res:
             return [('text', res)]
-
-        if self.messages == '检测':
-            return [('text', '屑')]
+        else:
+            try:
+                return [('text', switch[self.messages])]
+            except KeyError:
+                return
 
 class Proce:
     '''
@@ -166,7 +172,7 @@ class Proce:
     '''
 
     def __init__(self, sourceAll, com):
-                                                        #是不是考虑一下元组拆包的特性以减少代码量
+
         self.sourceAll = sourceAll
         self.com = com
 
@@ -184,12 +190,12 @@ class Proce:
 
         # print(f"self.com:=>{self.com}")
 
-        try:
-            if match('^:ping', self.com):               #特殊指令
-                return Features(self.com).Ping()
-            elif self.com == 'analysis':
-                return Analysis(self.sourceAll).Run()
-            else:
+        if match('^:ping', self.com):                   #特殊指令
+            return Features(self.com).Ping()
+        elif self.com == 'analysis':
+            return Analysis(self.sourceAll).Run()
+        else:
+            try:
                 return switch[self.com](self)
-        except KeyError:
-            return [('text', f"没有{self.com}这条命令!")]  
+            except KeyError:
+                return [('text', f"没有{self.com}这条命令!")]  

@@ -2,9 +2,9 @@
 
 import asyncio
 
-from graia.application.entry import (At, Friend, GraiaMiraiApplication, Group,
-                                     Image, Json, Member, MessageChain, Plain,
-                                     Session, Xml)
+from graia.application.entry import (App, At, Friend, GraiaMiraiApplication,
+                                     Group, Image, Json, Member, MessageChain,
+                                     Plain, Session, Xml)
 from graia.broadcast import Broadcast
 
 from Features import Clean, Proce
@@ -15,7 +15,7 @@ mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
             host = "http://127.0.0.1:8080",
-            authKey = "INITKEYGMGZMdzU",
+            authKey = "KeyofMiraiHttpApi",
             account = 1291517893,
             websocket = True
         )
@@ -39,7 +39,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
     # 此处需要重写，以应对混合消息
     messages = message.asDisplay()                  #消息
     timestamp = message.__root__[0].time            #每条消息的时间
-    groupid = group.id                              #发消息的群/以免刷屏检测混淆
+    groupid = member.group.id                              #发消息的群/以免刷屏检测混淆
     memberid = member.id                            #发送消息的人
 
     sourceAll = (timestamp, groupid, memberid, messages)
@@ -75,7 +75,6 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
 
     command = Clean(messages).comList
     # print(f"command:=>{command}")
-
     for com in command:
 
         try:

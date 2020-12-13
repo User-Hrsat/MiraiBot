@@ -29,5 +29,7 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
             'xml' : Xml
             }
 
+    print(f":=>{message}\n:=>{group}\n:=>{member}")
+
 if __name__=="__main__":
     mirai.launch_blocking()
