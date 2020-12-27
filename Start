@@ -1,10 +1,13 @@
 #!/bin/bash
 
 SATRT(){
-    #cd path/to/bot
+    #cd path/to/mirailoader
+    # cd MCL/
     nohup ./miraiOK_linux-amd64 > /dev/null &
+    # nohup ./mcl > /dev/null &
     if [ ! `$(ps -ef | grep mirai.console)`];then
         sleep 7s
+        cd ../
         nohup python3.8 Main.py > /dev/null &
     fi
 }
