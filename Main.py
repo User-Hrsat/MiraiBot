@@ -1,4 +1,4 @@
-#! /usr/bin/env python3.8
+#! /usr/bin/env python3.9
 
 import asyncio
 
@@ -15,8 +15,8 @@ mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
             host = "http://127.0.0.1:8080",
-            authKey = "KeyofMiraiHttpApi",
-            account = 1291517893,
+            authKey = "Key",
+            account = 123,
             websocket = True
         )
 )

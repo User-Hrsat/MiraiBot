@@ -1,4 +1,4 @@
-#! /usr/bin/env python3.8
+#! /usr/bin/env python3.9
 
 import time
 from copy import deepcopy
@@ -31,7 +31,7 @@ class Clean:
         else:
             for word in spwords:
                 self.messages = self.messages.replace(word, '\n')  #去特殊字符
-            self.comList = self.messages.splitlines()     #去换行
+            self.comList = set(self.messages.splitlines())     #去换行,去重
 
 class Features:                                         #固定指令的功能
 
