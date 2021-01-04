@@ -2,10 +2,10 @@
 
 SATRT(){
     #cd path/to/mirailoader
-    # cd MCL/
-    nohup ./miraiOK_linux-amd64 > /dev/null &
-    # nohup ./mcl > /dev/null &
-    if [ ! `$(ps -ef | grep mirai.console)`];then
+    cd MCL/
+    # nohup ./miraiOK_linux-amd64 > /dev/null &
+    nohup ./mcl > /dev/null &
+    if [ ! `$(ps -ef | grep mcl.jar)`];then
         sleep 7s
         cd ../
         nohup python3.8 Main.py > /dev/null &
@@ -13,7 +13,7 @@ SATRT(){
 }
 
 STOP(){
-    kill -9 $(ps -ef | grep mirai.console | cut -c 10-16)
+    kill -9 $(ps -ef | grep mcl.jar | cut -c 10-16)
     kill -9 $(ps -ef | grep Main.py | cut -c 10-16)
 }
 
