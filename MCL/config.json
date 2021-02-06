@@ -4,22 +4,34 @@
   "maven_repo": "https://maven.aliyun.com/repository/public",
   "packages": [
     {
+      "id": "org.bouncycastle:bcprov-jdk15on",
+      "channel": "stable",
+      "version": "1.64",
+      "type": "libs"
+    },
+    {
       "id": "net.mamoe:mirai-console",
       "channel": "nightly",
-      "version": "2.0-M2-1-dev-1",
+      "version": "2.3.2",
       "type": "libs"
     },
     {
       "id": "net.mamoe:mirai-console-terminal",
       "channel": "beta",
-      "version": "2.0-M2",
+      "version": "2.3.2",
       "type": "libs"
     },
     {
       "id": "net.mamoe:mirai-core-all",
       "channel": "beta",
-      "version": "2.0-M2-2",
+      "version": "2.3.2",
       "type": "libs"
+    },
+    {
+      "id": "net.mamoe:mirai-api-http",
+      "channel": "stable",
+      "version": "1.9.8",
+      "type": "plugins"
     }
   ],
   "disabled_scripts": [],

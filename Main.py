@@ -14,9 +14,9 @@ app = Broadcast(loop=asyncio.get_event_loop())
 mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
-            host = "http://127.0.0.1:8080",
-            authKey = "Key",
-            account = 123,
+            host = "http://localhost:8080",
+            authKey = "KeyofMiraiHttpApi",
+            account = 1291517893,
             websocket = True
         )
 )

@@ -1,0 +1,44 @@
+2020-11-13 16:16:08 I/Net 1291517893: Connected to server 42.81.169.46:8080
+2020-11-13 16:16:08 V/Net 1291517893: Send: wtlogin.login
+2020-11-13 16:16:09 V/Net 1291517893: Recv: LoginPacketResponse.Success
+2020-11-13 16:16:09 I/Net 1291517893: Login successful
+2020-11-13 16:16:09 V/Net 1291517893: Send: StatSvc.register
+2020-11-13 16:16:09 V/Net 1291517893: Recv: Response(StatSvc.register)
+2020-11-13 16:16:09 I/Net 1291517893: 开始加载好友信息
+2020-11-13 16:16:09 I/Net 1291517893: 开始加载群组列表与群成员列表
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.getFriendGroupList
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.GetTroopListReqV2
+2020-11-13 16:16:09 V/Net 1291517893: Recv: FriendList.GetFriendGroupList.Response
+2020-11-13 16:16:09 V/Net 1291517893: 正在加载好友列表 3/3
+2020-11-13 16:16:09 I/Net 1291517893: 好友列表加载完成, 共 3个
+2020-11-13 16:16:09 V/Net 1291517893: Recv: FriendList.GetFriendGroupList.Response
+2020-11-13 16:16:09 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-13 16:16:09 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-13 16:16:09 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-13 16:16:09 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:09 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-13 16:16:10 I/Net 1291517893: 群组列表与群成员加载完成, 共 4个
+2020-11-13 16:16:10 I/Net 1291517893: Awaiting ConfigPushSvc.PushReq
+2020-11-13 16:16:10 I/Net 1291517893: Syncing friend message history...
+2020-11-13 16:16:10 V/Net 1291517893: Send: MessageSvc.PbGetMsg
+2020-11-13 16:16:10 V/Net 1291517893: Send: MessageSvc.PbDeleteMsg
+2020-11-13 16:16:10 V/Net 1291517893: Send: MessageSvc.PbGetMsg
+2020-11-13 16:16:11 V/Net 1291517893: Send: MessageSvc.PbDeleteMsg
+2020-11-13 16:16:11 I/Net 1291517893: Syncing friend message history: Success
+2020-11-13 16:16:12 V/Net 1291517893: Recv: ConfigPushSvc.PushReq.PushReqResponse.Success
+2020-11-13 16:16:12 V/Net 1291517893: Send: ConfigPushSvc.PushResp
+2020-11-13 16:16:12 I/Net 1291517893: ConfigPushSvc.PushReq: Success
+2020-11-13 16:16:12 D/Net 1291517893: Received unknown commandName: ConfigPushSvc.PushDomain
+2020-11-13 16:16:12 V/Net 1291517893: Recv: ConfigPushSvc.PushReq.PushReqResponse.Success
+2020-11-13 16:16:12 V/Net 1291517893: Send: ConfigPushSvc.PushResp

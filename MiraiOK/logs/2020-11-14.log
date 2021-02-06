@@ -1,0 +1,161 @@
+2020-11-14 23:10:16 I/Net 1291517893: Connected to server 42.81.169.46:8080
+2020-11-14 23:10:16 V/Net 1291517893: Send: wtlogin.login
+2020-11-14 23:10:17 V/Net 1291517893: Recv: LoginPacketResponse.Success
+2020-11-14 23:10:17 I/Net 1291517893: Login successful
+2020-11-14 23:10:17 V/Net 1291517893: Send: StatSvc.register
+2020-11-14 23:10:17 V/Net 1291517893: Recv: Response(StatSvc.register)
+2020-11-14 23:10:17 I/Net 1291517893: 开始加载好友信息
+2020-11-14 23:10:17 I/Net 1291517893: 开始加载群组列表与群成员列表
+2020-11-14 23:10:17 V/Net 1291517893: Send: friendlist.getFriendGroupList
+2020-11-14 23:10:17 V/Net 1291517893: Send: friendlist.GetTroopListReqV2
+2020-11-14 23:10:17 V/Net 1291517893: Recv: FriendList.GetFriendGroupList.Response
+2020-11-14 23:10:17 V/Net 1291517893: 正在加载好友列表 3/3
+2020-11-14 23:10:17 I/Net 1291517893: 好友列表加载完成, 共 3个
+2020-11-14 23:10:17 V/Net 1291517893: Recv: FriendList.GetFriendGroupList.Response
+2020-11-14 23:10:17 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-14 23:10:17 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-14 23:10:17 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-14 23:10:17 V/Net 1291517893: Send: OidbSvc.0x88d_7
+2020-11-14 23:10:17 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 V/Net 1291517893: Send: friendlist.GetTroopMemberListReq
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 V/Net 1291517893: Recv: FriendList.GetTroopMemberList.Response
+2020-11-14 23:10:18 I/Net 1291517893: 群组列表与群成员加载完成, 共 4个
+2020-11-14 23:10:18 I/Net 1291517893: Syncing friend message history...
+2020-11-14 23:10:18 I/Net 1291517893: Awaiting ConfigPushSvc.PushReq
+2020-11-14 23:10:18 V/Net 1291517893: Send: MessageSvc.PbGetMsg
+2020-11-14 23:10:18 V/Net 1291517893: Send: MessageSvc.PbDeleteMsg
+2020-11-14 23:10:18 V/Net 1291517893: Send: MessageSvc.PbGetMsg
+2020-11-14 23:10:18 V/Net 1291517893: Send: MessageSvc.PbDeleteMsg
+2020-11-14 23:10:18 I/Net 1291517893: Syncing friend message history: Success
+2020-11-14 23:10:20 V/Net 1291517893: Recv: ConfigPushSvc.PushReq.PushReqResponse.Success
+2020-11-14 23:10:20 V/Net 1291517893: Send: ConfigPushSvc.PushResp
+2020-11-14 23:10:20 I/Net 1291517893: ConfigPushSvc.PushReq: Success
+2020-11-14 23:10:20 D/Net 1291517893: Received unknown commandName: ConfigPushSvc.PushDomain
+2020-11-14 23:10:20 V/Net 1291517893: Recv: ConfigPushSvc.PushReq.PushReqResponse.Success
+2020-11-14 23:10:20 V/Net 1291517893: Send: ConfigPushSvc.PushResp
+2020-11-14 23:11:00 V/Net 1291517893: Send: ImgStore.GroupPicUp
+2020-11-14 23:11:00 V/Net 1291517893: Recv: RequireUpload(fileId=2562784521, uKey=[-46, -110, 37, 81, 3, -69, -47, -91, -78, 73, -23, -102, 71, 114, 78, 19, 19, -118, -64, -52, 80, 115, 0, 66, -93, -28, 119, 77, 1, 114, 16, 117, 13, 65, 94, 126, -64, -6, -66, -33, -117, 85, 117, 88, -28, -111, -99, -80, -94, -59, -127, 80, -79, -106, -128, 91, -45, 84, -52, 127, 108, -89, 24, -39, -18, -51, 76, -1, 108, -120, 61, -94, -30, 56, -70, 40, -32, 113, -3, -117, 90, -36, -116, 100, 35, 66, 45, 68, -113, -101, 118, 114, -89, 67, 5, -32, 78, 43, 3, -65, -7, 113, 54, -36, -75, 105, 29, 23, 100, -44, -124, 60, 73, -27, -63, 90, -123, 44, 9, 73, -46, -79, 90, -39, -99, -89, 23, 46])
+2020-11-14 23:11:00 V/Net 1291517893: [Highway] Uploading group image to 123.150.76.168:8080, size=303.58 KiB
+2020-11-14 23:11:02 V/Net 1291517893: [Highway] Uploading group image: succeed at 197 KiB/s
+2020-11-14 23:11:02 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:11:02 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:11:17 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:11:17 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:12:17 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:12:17 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:13:17 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:13:17 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:13:42 V/Net 1291517893: Send: ImgStore.GroupPicUp
+2020-11-14 23:13:42 V/Net 1291517893: Recv: FileExists(fileId=3065654668, fileInfo=ImgInfo(fileMd5=[18, 36, -79, 76, -76, 71, 119, 92, -71, 84, 46, 47, 79, 30, -121, 27], fileType=1000, fileSize=726678, fileWidth=0, fileHeight=0))
+2020-11-14 23:13:42 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:13:42 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:14:17 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:14:17 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:15:17 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:15:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:16:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:16:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:16:41 V/Net 1291517893: Send: ImgStore.GroupPicUp
+2020-11-14 23:16:41 V/Net 1291517893: Recv: FileExists(fileId=2572733361, fileInfo=ImgInfo(fileMd5=[8, 12, -49, -23, -110, -73, 49, 116, -56, -14, 48, -98, -13, 35, -105, 72], fileType=1000, fileSize=221730, fileWidth=0, fileHeight=0))
+2020-11-14 23:16:41 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:16:41 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:17:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:17:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:18:13 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:18:13 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:18:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:18:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:18:26 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:18:26 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:19:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:19:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:20:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:20:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:21:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:21:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:22:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:22:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:23:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:23:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:24:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:24:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:25:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:25:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:26:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:26:18 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:26:28 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:26:28 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:27:18 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:27:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:27:40 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:27:40 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:27:49 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:27:50 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:28:01 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:28:01 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:28:13 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:28:13 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:28:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:28:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:29:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:29:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:29:34 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:29:34 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:30:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:30:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:31:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:31:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:31:55 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:31:56 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:11 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:11 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:32:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:32:21 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:21 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:26 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:26 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:41 V/Net 1291517893: Send: ImgStore.GroupPicUp
+2020-11-14 23:32:41 V/Net 1291517893: Recv: FileExists(fileId=2155321750, fileInfo=ImgInfo(fileMd5=[8, 12, -49, -23, -110, -73, 49, 116, -56, -14, 48, -98, -13, 35, -105, 72], fileType=1000, fileSize=221730, fileWidth=0, fileHeight=0))
+2020-11-14 23:32:41 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:41 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:41 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:42 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:42 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:42 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:32:43 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:32:43 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:33:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:33:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:33:20 V/Net 1291517893: Send: ImgStore.GroupPicUp
+2020-11-14 23:33:20 V/Net 1291517893: Recv: FileExists(fileId=2315935122, fileInfo=ImgInfo(fileMd5=[8, 12, -49, -23, -110, -73, 49, 116, -56, -14, 48, -98, -13, 35, -105, 72], fileType=1000, fileSize=221730, fileWidth=0, fileHeight=0))
+2020-11-14 23:33:20 V/Net 1291517893: Send: MessageSvc.PbSendMsg
+2020-11-14 23:33:20 V/Net 1291517893: Recv: MessageSvcPbSendMsg.Response.SUCCESS
+2020-11-14 23:34:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:34:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:35:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:35:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:36:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:36:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:37:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:37:19 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:38:19 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:38:20 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:39:20 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:39:20 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:40:20 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:40:20 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:41:20 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:41:20 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:42:20 V/Net 1291517893: Send: Heartbeat.Alive
+2020-11-14 23:42:20 V/Net 1291517893: Recv: Heartbeat.Alive.Response
+2020-11-14 23:43:20 V/Net 1291517893: Send: Heartbeat.Alive
