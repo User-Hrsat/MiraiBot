@@ -2,11 +2,12 @@
 
 #import time
 from copy import deepcopy
+from json import loads
 from os import popen
 from random import randint
 from re import match
-from urllib import request
-from json import loads
+from urllib import parse, request
+
 from requests import get
 
 #import datetime
@@ -78,17 +79,28 @@ class Features:                                         #固定指令的功能
 
     def Wiki(self):
         entry = self.com.split(' ')
-        if entry[1] != None:
-            res = get(url=f"https://zh.wikipedia.wikimirror.org/api/rest_v1/page/summary/{entry[1]}",
-                      headers={
-                          'accept-language' : 'zh-CN,zh;q=0.9',
-                          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'
-                      })
+        if len(entry) == 2:
+            res = get(
+                url=f"https://zh.wikipedia.wikimirror.org/api/rest_v1/page/summary/{entry[1]}",
+                headers={
+                    'accept-language' : 'zh-CN,zh;q=0.9',
+                    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'
+                })
             content = loads(res.text)
-            if content['extract'] == None:
-                return [('text', '什么都没有查到唉！\n可能没有这个条目或者指定条目名称错误！\n换一个试试吧:)')]
-            else:
+            #urllib的玩法
+            #entry = parse.quote(entry[1], encoding='utf-8')
+            #req = request.Request(
+            #    url=f"https://zh.wikipedia.wikimirror.org/api/rest_v1/page/summary/{entry}",
+            #    headers={
+            #        'accept-language' : 'zh-CN,zh;q=0.9',
+            #        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'
+            #    })
+            #res = request.urlopen(req)
+            #content = loads(res.read().decode('utf-8'))
+            try:
                 return [('image', "resource/images/zhwiki-hans.png"), ('text', f"\n============\n{content['extract']}")]
+            except KeyError:
+                return [('text', '什么都没有查到唉！\n可能没有这个条目或者指定条目名称错误！\n换一个试试吧:)')]
         else:
             return [('text', """
 正确用法：
@@ -210,7 +222,7 @@ class Proce:
 
         if match('^:ping', self.com):                   #特殊指令
             return Features(self.com).Ping()
-        elif match('^:wiki', self.com):
+        elif match('^:wiki', self.com):                 #已凸显局限性，需改进
             return Features(self.com).Wiki()
         elif self.com == 'analysis':
             return Analysis(self.sourceAll).Run()
