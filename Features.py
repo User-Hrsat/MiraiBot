@@ -1,11 +1,13 @@
 #! /usr/bin/env python3.9
 
-import time
+#import time
 from copy import deepcopy
 from os import popen
 from random import randint
 from re import match
 from urllib import request
+from json import loads
+from requests import get
 
 #import datetime
 #import jieba                                           有点差劲唉,可能是没用好
@@ -75,7 +77,24 @@ class Features:                                         #固定指令的功能
         return [('text', "你说什么我听不懂")]
 
     def Wiki(self):
-        return [('image', "resource/images/zhwiki-hans.png"), ('text', "\n维基百科")]
+        entry = self.com.split(' ')
+        if entry[1] != None:
+            res = get(url=f"https://zh.wikipedia.wikimirror.org/api/rest_v1/page/summary/{entry[1]}",
+                      headers={
+                          'accept-language' : 'zh-CN,zh;q=0.9',
+                          'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'
+                      })
+            content = loads(res.text)
+            if content['extract'] == None:
+                return [('text', '什么都没有查到唉！\n可能没有这个条目或者指定条目名称错误！\n换一个试试吧:)')]
+            else:
+                return [('image', "resource/images/zhwiki-hans.png"), ('text', f"\n============\n{content['extract']}")]
+        else:
+            return [('text', """
+正确用法：
+:wiki 条目名称
+简体环境不够完善，可能导致查询无果！
+还请见谅！！！""")]
     
     def Zuan(self):
         response = request.urlopen("https://nmsl.shadiao.app/api.php?level=min&lang=zh_cn")
@@ -184,7 +203,6 @@ class Proce:
                 ':image' : Features.Image,
                 ':rss' : Features.RSS,
                 ':zuan' : Features.Zuan,
-                ':wiki' : Features.Wiki,
                 ':help' : Features.Help
             }
 
@@ -192,6 +210,8 @@ class Proce:
 
         if match('^:ping', self.com):                   #特殊指令
             return Features(self.com).Ping()
+        elif match('^:wiki', self.com):
+            return Features(self.com).Wiki()
         elif self.com == 'analysis':
             return Analysis(self.sourceAll).Run()
         else:
