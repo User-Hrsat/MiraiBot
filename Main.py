@@ -7,14 +7,15 @@ from graia.application.entry import (App, At, Friend, GraiaMiraiApplication,
                                      Plain, Session, Xml)
 from graia.broadcast import Broadcast
 
-from Features import Clean, Proce
+from Clean import Clean
+from Proce import Proce
 
 app = Broadcast(loop=asyncio.get_event_loop())
 
 mirai = GraiaMiraiApplication(
         broadcast = app,
         connect_info = Session(
-            host = "http://localhost:8080",
+            host = "http://localhost:4201",
             authKey = "KeyofMiraiHttpApi",
             account = 1291517893,
             websocket = True
@@ -60,11 +61,11 @@ async def event_gm(mirai: GraiaMiraiApplication, message: MessageChain, group: G
         支持不同类型的内容拼接发送
         '''
  
-        messageChain = [MessageChain.create([switch[item[0]](item[1])]) for item in recall]
+        recallChain = [MessageChain.create([switch[item[0]](item[1])]) for item in recall]
         sendChain = MessageChain.create([At(memberid)])
         # print(f"messageChain:=>{messageChain}")
         # sendChain.plus(el for el in messageChain) 为什么不能用
-        for el in messageChain:
+        for el in recallChain:
             sendChain.plus(el)
         # print(f"sendChain:=>{sendChain}")
 
