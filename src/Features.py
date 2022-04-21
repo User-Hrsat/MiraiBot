@@ -31,7 +31,7 @@ class Features:                                         #固定指令的功能
 
     def Image(self):
         num = randint(0, 2)
-        return [('image', f"resource/images/{num}.jpg")]
+        return [('image', f"res/img/{num}.jpg")]
 
     def Ping(self):
         #ip = match(r":ping ((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){3}", self.com)
@@ -77,7 +77,7 @@ class Features:                                         #固定指令的功能
             #res = request.urlopen(req)
             #content = loads(res.read().decode('utf-8'))
             try:
-                return [('image', "resource/images/zhwiki-hans.png"), ('text', f"\n============\n{content['extract']}")]
+                return [('image', "res/img/zhwiki-hans.png"), ('text', f"\n============\n{content['extract']}")]
             except KeyError:
                 return [('text', '什么都没有查到唉！\n可能没有这个条目或者指定条目名称错误！\n换一个试试吧:)')]
         else:

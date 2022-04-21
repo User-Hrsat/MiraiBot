@@ -7,7 +7,7 @@ from graia.application.entry import (App, At, Friend, GraiaMiraiApplication,
                                      Plain, Session, Xml)
 from graia.broadcast import Broadcast
 
-from Clean import Clean
+from src.Clean import Clean
 from Proce import Proce
 
 app = Broadcast(loop=asyncio.get_event_loop())
