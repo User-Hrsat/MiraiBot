@@ -24,10 +24,10 @@ scheduler = GraiaScheduler(loop=bcc.loop, broadcast=bcc)
 Ariadne.config(loop=bcc.loop, broadcast=bcc)
 app = Ariadne(
     config(
-        1355788940,                                             # 机器人的QQ号
-        "keyofMiraiHttpAPI",                                    # verifyKey
-        #HttpClientConfig("http://172.21.201.27:4201"),         # HttpAPI服务的地址
-        WebsocketClientConfig("http://172.21.201.27:4202")      # WebSocket地址
+        123456789,                                              # 机器人的QQ号
+        "verifyKey",                                            # verifyKey
+        HttpClientConfig("http://ip:4201"),                    # HttpAPI服务的地址
+        WebsocketClientConfig("http://ip:4202")                 # WebSocket地址
     )
 )
 
