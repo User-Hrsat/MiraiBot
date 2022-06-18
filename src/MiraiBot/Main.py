@@ -1,7 +1,5 @@
 #! /usr/bin/env python
 
-import asyncio
-
 from graia.ariadne.app import Ariadne
 from graia.ariadne.connection.config import config, HttpClientConfig, WebsocketClientConfig
 from graia.ariadne.message.chain import MessageChain
@@ -24,12 +22,13 @@ scheduler = GraiaScheduler(loop=bcc.loop, broadcast=bcc)
 Ariadne.config(loop=bcc.loop, broadcast=bcc)
 app = Ariadne(
     config(
-        123456789,                                              # 机器人的QQ号
-        "verifyKey",                                            # verifyKey
-        HttpClientConfig("http://ip:4201"),                    # HttpAPI服务的地址
-        WebsocketClientConfig("http://ip:4202")                 # WebSocket地址
+        123456789,  # 机器人的QQ号
+        "verifyKey",  # verifyKey
+        # HttpClientConfig("http://ip:4201"),  # HttpAPI服务的地址
+        WebsocketClientConfig("http://ip:4201")  # WebSocket地址
     )
 )
+
 
 # crontabify()设置时间
 # *    *    *    *    *    *
@@ -44,19 +43,22 @@ app = Ariadne(
 async def maid():
     ...
 
+
 @bcc.receiver("GroupMessage")
 async def groupMessageListener(group: Group, message: MessageChain):
-    ...
+    print(f'{group}: {message.display}')
+
 
 @bcc.receiver("FriendMessage")
 async def friendMessageListener(friend: Friend, message: MessageChain):
-    ...
+    await messageSender(friend, message.display)
 
-async def messageSender(id, message):
-    if message.asDisplay() == "123":
-        await app.sendMessage(id, MessageChain.create([
-            Plain("OK")
-        ]))
+
+async def messageSender(rec, content):
+    await app.sendMessage(rec, MessageChain.create([
+        Plain(content)
+    ]))
+
 
 if __name__ == "__main__":
     app.launch_blocking()
