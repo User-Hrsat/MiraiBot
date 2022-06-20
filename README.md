@@ -6,9 +6,9 @@
 
 ## MiraiBot
 
-> 一个基于Graia的MiraiBot
+> 一个基于Graia-Ariadne的MiraiBot
 
-### Todo
+### TODO
 
 - 功能
 - [ ] 每日早报
