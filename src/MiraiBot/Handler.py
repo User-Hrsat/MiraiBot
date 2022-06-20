@@ -8,7 +8,7 @@ from Features import Features
 class Handler:
     def __init__(self):
         # Todo
-        # 可有用Ariadne的输出
+        # 可以用Ariadne的输出
         print('Handler Init')
         self.clean = Clean()
         self.features = Features()
@@ -30,7 +30,7 @@ class Handler:
         }
 
     def messageCreater(self, results):
-        # 对象的生命周期笔方法长
+        # 对象的生命周期比方法长
         # 用局部变量不要用对象属性
         content = MessageChain(Plain(''))
 

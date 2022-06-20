@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "miraibot"
+version = "0.1.0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.10"
+graia-ariadne = {extras = ["standard"], version = "^0.7.12"}
+
+[tool.poetry.dev-dependencies]
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+default = false
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
