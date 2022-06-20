@@ -3,7 +3,10 @@ class Ping:
     usage = '就是ping嘛'
 
     def __init__(self):
-        print('Ping Init')
+        ...
 
     def __call__(self, addr):
-        return 'text', f'Ping {addr} ...'
+        return 'text', f'Ping {addr[0]} ...'
+
+    def __del__(self):
+        ...

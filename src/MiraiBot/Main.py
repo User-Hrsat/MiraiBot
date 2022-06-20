@@ -1,13 +1,17 @@
 #! /usr/bin/env python
 
 from graia.ariadne.app import Ariadne
-from graia.ariadne.connection.config import config, HttpClientConfig, WebsocketClientConfig
+from graia.ariadne.connection.config import config, WebsocketClientConfig
 from graia.ariadne.message.chain import MessageChain
-from graia.ariadne.message.element import Plain
 from graia.ariadne.model import Friend, Group
 from graia.broadcast import Broadcast
 from graia.scheduler import GraiaScheduler
 from graia.scheduler.timers import crontabify
+
+from Handler import Handler
+
+# 处理器
+handler = Handler()
 
 # loop = asyncio.new_event_loop()
 # Broadcast的__init__给过了new_event_loop()
@@ -20,12 +24,19 @@ scheduler = GraiaScheduler(loop=bcc.loop, broadcast=bcc)
 # 可以让scheduler与Ariande一起跑
 # 不设置的话Ariadne会自己生成一套
 Ariadne.config(loop=bcc.loop, broadcast=bcc)
+
 app = Ariadne(
+    # 对象方法
     config(
-        123456789,  # 机器人的QQ号
-        "verifyKey",  # verifyKey
-        # HttpClientConfig("http://ip:4201"),  # HttpAPI服务的地址
-        WebsocketClientConfig("http://ip:4201")  # WebSocket地址
+        # 账号
+        1234567890,
+        # 校验码
+        "verifyKey",
+        # HttpAPI服务的地址
+        # HttpClientConfig("http://ip:port"),
+        # 只能二选一
+        # WebSocket地址
+        WebsocketClientConfig("http://ip:port")
     )
 )
 
@@ -40,24 +51,22 @@ app = Ariadne(
 # |    +-------------------- 小时 (0 - 23)
 # +------------------------- 分钟 (0 - 59)
 @scheduler.schedule(crontabify('12 20 * * * 24'))
-async def maid():
+async def schedule():
     ...
 
 
 @bcc.receiver("GroupMessage")
 async def groupMessageListener(group: Group, message: MessageChain):
-    print(f'{group}: {message.display}')
+    await messageSender(group, handler(message.display))
 
 
 @bcc.receiver("FriendMessage")
 async def friendMessageListener(friend: Friend, message: MessageChain):
-    await messageSender(friend, message.display)
+    await messageSender(friend, handler(message.display))
 
 
 async def messageSender(rec, content):
-    await app.sendMessage(rec, MessageChain.create([
-        Plain(content)
-    ]))
+    await app.sendMessage(rec, content)
 
 
 if __name__ == "__main__":

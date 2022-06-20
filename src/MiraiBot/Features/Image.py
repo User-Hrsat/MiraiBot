@@ -7,7 +7,7 @@ class Image:
     usage = '随机图片'
 
     def __init__(self):
-        self.path_ = '../res/img/'
+        self.path_ = '../../res/img/'
         self.img_ = choice(listdir(self.path_))
         print('Image Init')
 
