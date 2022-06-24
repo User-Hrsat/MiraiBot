@@ -6,7 +6,7 @@ class Ping:
         ...
 
     def __call__(self, addr):
-        return 'text', f'Ping {addr[0]} ...'
+        return 'text', f'Pong {addr[0]}'
 
     def __del__(self):
         ...
